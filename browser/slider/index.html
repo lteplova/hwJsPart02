@@ -28,6 +28,26 @@
         <p class="product-description">
           Nike's revolutionary Air-Sole unit made its way into Nike footwear in the late '70s. In 1987, the Nike Air Max 1 debuted with visible air in its heel, allowing fans more than just the feel of Air-Sole comfort
         </p>
+        <script>
+          const images = [
+  "https://netology-code.github.io/hj-homeworks/browser/slider/i/airmax-jump.png",
+  "https://netology-code.github.io/hj-homeworks/browser/slider/i/airmax-on-foot.png",
+  "https://netology-code.github.io/hj-homeworks/browser/slider/i/airmax-playground.png",
+  "https://netology-code.github.io/hj-homeworks/browser/slider/i/airmax-top-view.png",
+  "https://netology-code.github.io/hj-homeworks/browser/slider/i/airmax.png"
+];
+const slider = document.getElementById("slider");
+let current = 0;
+
+function show() {
+  slider.src = images[current];
+  current == 4 ? (current = 0) : current++;
+}
+
+show();
+setInterval(show, 5000);
+
+        </script>
       </div>
     </div>
   </section>
