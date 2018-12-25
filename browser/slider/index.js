@@ -17,4 +17,4 @@ function show() {
 }
 
 show();
-setInterval(show, 1000);
+setInterval(show, 5000);
