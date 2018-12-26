@@ -26,7 +26,60 @@ const higher = [
 
 
 
-function lower() {
+//let current = 0;
+//let isPlayed = false;
+
+function selectKey() {
+    const set = document.getElementsByClassName('set')[0];
+    const whiteKey = set.getElementsByClassName('white')[0];
+    const blackKey = set.getElementsByClassName('black')[0];
+    const audioWhite = whiteKey.getElementsByTagName('audio')[0];
+    const audioBlack = blackKey.getElementsByTagName('audio')[0];
+    
+let current = 0;
+
+const whiteMiddle = middle.filter (item => {
+    if (middle[item] % 2 == 0)
+    return item;
+    console.log (middle[item], item);
+});
+ 
+   
+
+    // middle.map( itemMiddle => {
+    //     if ( middle)
+    //     console.log(item);
+    // Array.from(audioWhite).forEach( item => {
+    //     audioWhite.src = itemMiddle;
+    // });
+    
+    // console.log (audioWhite);
+    // });
+
+    // for (const item of audioWhite) {
+    //     audioWhite.src = middle[0];
+    //     //     item.addEventListener('click', selectKey)
+    //     console.log (audioWhite);
+    //      }
 
 }
-document.addEventListener('keydown', lower);
+
+selectKey();
+
+// for (const item of whiteKey) {
+//     item.addEventListener('click', selectKey)
+// }
+
+
+// event.altKey
+// event.shiftKey
+// function pressedKey(event) {
+//     if (event instanceof KeyboardEvent) {
+//         console.log(event.key, event.code);
+//     }
+// }
+
+// function showKey(event) {
+//     console.log(event.type, event.code);
+// }
+// document.addEventListener('keydown', showKey);
