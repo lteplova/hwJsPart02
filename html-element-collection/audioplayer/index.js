@@ -21,8 +21,8 @@ const songs = [
 let current = 0;
 let isPlayed = false;
 
-const mediaPlayer = document.getElementsByClassName('mediaplayer')[0];
-const audio = mediaPlayer.getElementsByTagName('audio')[0];
+const mediaPlayer = document.getElementsByClassName("mediaplayer")[0];
+const audio = mediaPlayer.getElementsByTagName("audio")[0];
 const btnPlayState = document.getElementsByClassName("playstate")[0];
 const btnNext = document.getElementsByClassName("next")[0];
 const btnBack = document.getElementsByClassName("back")[0];
@@ -32,17 +32,17 @@ const titleSong = document.getElementsByClassName("title")[0];
 //включение проигрывания
 btnPlayState.onclick = function() {
   isPlayed ? audio.pause() : audio.play();
-  mediaPlayer.classList.toggle('play');
+  mediaPlayer.classList.toggle("play");
   isPlayed = !isPlayed;
 };
 
 //остановка проигрывания
 btnStop.onclick = function() {
-    audio.pause();
-    audio.currentTime = 0;
-    mediaPlayer.classList.remove('play');
-    isPlayed = false;
-}
+  audio.pause();
+  audio.currentTime = 0;
+  mediaPlayer.classList.remove("play");
+  isPlayed = false;
+};
 
 //переход на следующий трек
 function next() {
@@ -50,7 +50,6 @@ function next() {
   audio.src = songs[current].url;
   isPlayed ? audio.play() : audio.pause();
   titleSong.title = songs[current].title;
-
 }
 
 //переход на предыдущий трек
@@ -62,8 +61,8 @@ function prev() {
 }
 
 //ловим окончание песни и переходим на следующую
-audio.onended = function () {
-    next();
+audio.onended = function() {
+  next();
 };
 
 btnNext.onclick = next;
