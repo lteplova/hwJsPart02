@@ -62,6 +62,12 @@ function keyPressed(event) {
         setEl.classList.remove('higher');
         setEl.classList.add('middle');
         chooseMode(middle);
+
+ 
   }
+ 
+}
+
+
 
 document.addEventListener('keydown', keyPressed);
