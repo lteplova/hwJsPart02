@@ -27,13 +27,16 @@ const higher = [
 const setEl = document.getElementsByClassName('set')[0];
 const keysEl = setEl.getElementsByTagName('li');
 
+function chooseMode(mode = middle) {
 Array.from(keysEl).forEach((item, index) => {
     const audio = item.getElementsByTagName('audio')[0];
-    audio.src = middle[index]; 
+    audio.src = mode[index]; 
     item.addEventListener('click', event => {
     audio.play();
     });
   });
+}
+chooseMode();
 
 function keyPressed(event) {
    
@@ -43,70 +46,22 @@ function keyPressed(event) {
         setEl.classList.remove('middle');
         setEl.classList.remove('lower');
         setEl.classList.add('higher');
-
-        Array.from(keysEl).forEach((item, index) => {
-            const audio = item.getElementsByTagName('audio')[0];
-            audio.src = higher[index]; 
-            item.addEventListener('click', event => {
-            audio.play();
-            });
-          });
-
+        chooseMode(higher);
        }
-      //  console.log(setEl.classList);
-    //return higher;
-   } else if (event.key == 'Shift') {
+
+    } else if (event.key == 'Shift') {
     if(!setEl.classList.contains('lower')) {
         setEl.classList.remove('middle');
         setEl.classList.remove('higher');
         setEl.classList.add('lower');
-        
-        Array.from(keysEl).forEach((item, index) => {
-            const audio = item.getElementsByTagName('audio')[0];
-            audio.src = lower[index]; 
-            item.addEventListener('click', event => {
-            audio.play();
-            });
-          });
-
+        chooseMode(lower);
        }
-   // console.log(setEl.classList);
-    //return lower;
 
    } else if(!setEl.classList.contains('middle')) {
         setEl.classList.remove('lower');
         setEl.classList.remove('higher');
         setEl.classList.add('middle');
-
-        Array.from(keysEl).forEach((item, index) => {
-            const audio = item.getElementsByTagName('audio')[0];
-            audio.src = middle[index]; 
-            item.addEventListener('click', event => {
-            audio.play();
-            });
-          }); 
+        chooseMode(middle);
   }
-  //console.log(setEl.classList);
-  //return middle;
-}
-
-// Array.from(keysEl).forEach((item, index) => {
-//   const audio = item.getElementsByTagName('audio')[0];
-  
-//  // console.log(keyPressed(index));
-//   // audio.src = middle[index]; 
-//   //audio.src = keyPressed(index)[index];
-//   if (setEl.classList.contains('middle')) {
-//     audio.src = middle[index]; 
-//   } else if(setEl.classList.contains('lower')) {
-//     audio.src = lower[index];
-//   } else if(setEl.classList.contains('higher')){
-//   audio.src = higher[index];
-//   }
-
-//   item.addEventListener('click', event => {
-//   audio.play();
-//   });
-// });
 
 document.addEventListener('keydown', keyPressed);
