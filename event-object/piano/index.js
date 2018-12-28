@@ -68,6 +68,4 @@ function keyPressed(event) {
  
 }
 
-
-
 document.addEventListener('keydown', keyPressed);
