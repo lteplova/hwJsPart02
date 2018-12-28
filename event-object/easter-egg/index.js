@@ -13,16 +13,17 @@ function openCloseMenu(event){
 
 document.addEventListener('keypress', openCloseMenu);
 
-
-
 const classSecret = document.getElementsByClassName('secret')[0];
 
 function secret(event) {
-    if (event.code == 'KeyS'){
+    if (event.code == ('KeyН' && 'KeyЕ' && 'KeyТ' && 'KeyО' && 'KeyЛ' && 'KeyО' && 'KeyГ' && 'KeyИ' && 'KeyЯ') ||
+                      ('KeyY' && 'KeyT' && 'KeyN' && 'KeyJ' && 'KeyK' && 'KeyJ' && 'KeyU' && 'KeyB' && 'KeyZ')) {
         if(classSecret.classList.contains('secret')) {
             classSecret.classList.add('visible');
         }
     }
+    console.log(event.code);
 }
 
 document.addEventListener('keydown', secret);
+//document.addEventListener('keyup', secret);
