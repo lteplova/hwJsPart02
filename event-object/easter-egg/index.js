@@ -15,3 +15,14 @@ document.addEventListener('keypress', openCloseMenu);
 
 
 
+const classSecret = document.getElementsByClassName('secret')[0];
+
+function secret(event) {
+    if (event.code == 'KeyS'){
+        if(classSecret.classList.contains('secret')) {
+            classSecret.classList.add('visible');
+        }
+    }
+}
+
+document.addEventListener('keydown', secret);
