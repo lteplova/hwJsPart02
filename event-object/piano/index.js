@@ -27,12 +27,13 @@ const higher = [
 const setEl = document.getElementsByClassName("set")[0];
 const keysEl = setEl.getElementsByTagName("li");
 
-function chooseMode(mode = middle, addClass = "middle") {
+function chooseMode(event, mode = middle, addClass = "middle") {
   Array.from(keysEl).forEach((item, index) => {
     setEl.className = "set " + addClass;
     const audio = item.getElementsByTagName("audio")[0];
     audio.src = mode[index];
     item.addEventListener("click", event => {
+    audio.currentTime = 0;
     audio.play();
     });
   });
@@ -41,11 +42,11 @@ chooseMode();
 
 function keyPressed(event) {
   if (event.key == "Alt") {
-    chooseMode(higher, "higher");
+    chooseMode(event, higher, "higher");
   } else if (event.key == "Shift") {
-    chooseMode(lower, "lower");
+    chooseMode(event, lower, "lower");
   } else {
-    chooseMode();
+    chooseMode(event, middle, 'middle');
   }
 }
 

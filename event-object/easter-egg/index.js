@@ -17,12 +17,8 @@ const classSecret = document.getElementsByClassName('secret')[0];
 
 function secret(event) {
     if (event.code == ('KeyY' && 'KeyT' && 'KeyN' && 'KeyJ' && 'KeyK' && 'KeyJ' && 'KeyU' && 'KeyB' && 'KeyZ')) {
-        if(classSecret.classList.contains('secret')) {
-            classSecret.classList.add('visible');
-        }
+        classSecret.classList.add('visible');
     }
-    console.log(event.code);
 }
 
 document.addEventListener('keydown', secret);
-document.addEventListener('keyup', secret);
