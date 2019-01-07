@@ -1,7 +1,6 @@
 "use strict";
 
 const data = JSON.parse(loadContacts());
-console.log(data);
 const ulEl = document.querySelector("#container > div.list-view > ul");
 let list = '';
 
