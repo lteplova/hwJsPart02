@@ -41,6 +41,10 @@ function chooseMode(event, mode = middle, addClass = "middle") {
 chooseMode();
 
 function keyPressed(event) {
+  console.log(event.repeat);
+  // if(event.repeat) {
+  //   return;
+  // }
   if (event.key == "Alt") {
     chooseMode(event, higher, "higher");
   } else if (event.key == "Shift") {
