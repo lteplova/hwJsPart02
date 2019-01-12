@@ -10,9 +10,8 @@ Array.from(cartButton).forEach(element => {
 });
 
 function addCart(event) {
-  totalSum = 
-    parseInt(totalSum) + parseInt(event.target.dataset.price);
-    totalSumEl.innerHTML = getPriceFormatted(totalSum); 
+  totalSum = parseInt(totalSum) + parseInt(event.target.dataset.price);
+  totalSumEl.innerHTML = getPriceFormatted(totalSum);
 
   totalCountEl.innerHTML = parseInt(totalCountEl.innerHTML) + 1;
 }
