@@ -1,7 +1,8 @@
 "use strict";
 
 const aEls = document.querySelectorAll('nav > a');
-console.log(aEls);
+const request = new XMLHttpRequest();
+const activeTabContent = document.querySelector("#content");
 
 Array.from(aEls).forEach(element => {
     element.addEventListener('click', tabClick)  
@@ -21,5 +22,13 @@ function resetActive(elements) {
 }
 
 function loadData(url) {
+request.open("GET", "url", true);
 console.log(url);
+request.send();
+request.addEventListener("load", onLoad);
 }
+
+
+function onLoad() {
+activeTabContent.innerHTML = loadData(url).href;
+  }
