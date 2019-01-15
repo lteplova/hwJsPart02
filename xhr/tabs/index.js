@@ -19,7 +19,7 @@ function tabClick(event) {
   event.preventDefault();
   resetActive(aEls);
   event.target.classList.toggle("active");
-  activeTabContent.innerHTML = '';
+  activeTabContent.innerHTML = "";
   loadData(event.target.href);
 }
 
@@ -40,12 +40,12 @@ function loadData(url) {
   function onLoad() {
     activeTabContent.innerHTML = request.responseText;
   }
-  
+
   function onLoadEnd() {
     preloaderEl.classList.add("hidden");
   }
 
   function onLoadStart() {
-      preloaderEl.classList.remove("hidden");
+    preloaderEl.classList.remove("hidden");
   }
 }
