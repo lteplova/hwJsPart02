@@ -7,5 +7,7 @@ function onLoad() {
   if (request.status === 200) {
     const response = JSON.parse(request.responseText);
     setData(response);
+  } else {
+    console.log(`Ошибка загрузки данных: ${xhr.status}, ${xhr.statusText}`);
   }
 }

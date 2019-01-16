@@ -4,14 +4,8 @@ const xhr = new XMLHttpRequest();
 xhr.open("GET", "https://neto-api.herokuapp.com/book/", true);
 xhr.send();
 xhr.addEventListener("load", onLoad);
-xhr.addEventListener("error", onError);
 const contentEl = document.querySelector("#content");
 let data = [];
-
-function onError() {
-  console.log(`Ошибка загрузки данных: ${xhr.status}, ${xhr.statusText}`);
-}
-
 
 function onLoad() {
   if (xhr.status === 200) {
@@ -20,7 +14,7 @@ function onLoad() {
       (str, currentValue) => str + render(currentValue), "");
   }
   else {
-    onError();
+    console.log(`Ошибка загрузки данных: ${xhr.status}, ${xhr.statusText}`);
   }
 }
 
