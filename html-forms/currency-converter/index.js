@@ -2,7 +2,7 @@
 
 const xhr = new XMLHttpRequest();
 xhr.addEventListener("load", onLoad);
-xhr.addEventListener("loadstart", onLoadStart);
+//xhr.addEventListener("loadstart", onLoadStart);
 xhr.addEventListener("loadend", onLoadEnd);
 xhr.open("GET", "https://neto-api.herokuapp.com/currency", true);
 xhr.send();
@@ -11,6 +11,13 @@ const fromEl = document.querySelector("#from");
 const toEl = document.querySelector("#to");
 const preloadEl = document.querySelector("#loader");
 const contentEl = document.querySelector("#content");
+const sourceEl = document.querySelector("#source");
+
+[fromEl, toEl, sourceEl].forEach(item => item.addEventListener('input', calc));
+
+function calc (e) {
+    console.log(e);
+}
 
 function onLoad() {
   if (xhr.status === 200) {
