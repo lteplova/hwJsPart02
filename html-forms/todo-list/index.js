@@ -1,6 +1,6 @@
 "use strict";
 
-const inputEl = document.querySelectorAll(".list-block input");
+const inputEl = document.querySelectorAll(".list-block input[type='checkbox']");
 const otputEl = document.querySelector("output");
 const listEl = document.querySelector(".list-block");
 
