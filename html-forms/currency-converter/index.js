@@ -1,5 +1,11 @@
 "use strict";
 
+const fromEl = document.querySelector("#from");
+const toEl = document.querySelector("#to");
+const preloadEl = document.querySelector("#loader");
+const contentEl = document.querySelector("#content");
+const sourceEl = document.querySelector("#source");
+const outputEl = document.querySelector("#result");
 const xhr = new XMLHttpRequest();
 xhr.addEventListener("load", onLoad);
 //xhr.addEventListener("loadstart", onLoadStart);
@@ -7,23 +13,25 @@ xhr.addEventListener("loadend", onLoadEnd);
 xhr.open("GET", "https://neto-api.herokuapp.com/currency", true);
 xhr.send();
 let data = [];
-const fromEl = document.querySelector("#from");
-const toEl = document.querySelector("#to");
-const preloadEl = document.querySelector("#loader");
-const contentEl = document.querySelector("#content");
-const sourceEl = document.querySelector("#source");
+
 
 [fromEl, toEl, sourceEl].forEach(item => item.addEventListener('input', calc));
 
-function calc (e) {
-    console.log(e);
+function calc(e) {
+  return outputEl.innerHTML = (Math.round((sourceEl.value * fromEl.value / toEl.value) * 100) / 100);
 }
 
 function onLoad() {
   if (xhr.status === 200) {
-    data = JSON.parse(xhr.responseText);
-    fromEl.innerHTML = render(data);
-    toEl.innerHTML = render(data);
+    try {
+      data = JSON.parse(xhr.responseText);
+      fromEl.innerHTML = render(data);
+      toEl.innerHTML = render(data);
+      calc();
+    } catch (e) {
+      console.error(`JSON invalid ${e}`);
+      return;
+    }
   } else {
     console.log(`Ошибка загрузки данных: ${xhr.status}, ${xhr.statusText}`);
   }
@@ -39,10 +47,10 @@ function render(data) {
 }
 
 function onLoadEnd() {
-    contentEl.classList.remove("hidden");
-    //preloadEl.classList.add("hidden");
-  }
+  contentEl.classList.remove("hidden");
+  preloadEl.classList.add("hidden");
+}
 
-  function onLoadStart() {
-    preloadEl.classList.remove("hidden");
-  }
+function onLoadStart() {
+  preloadEl.classList.remove("hidden");
+}
