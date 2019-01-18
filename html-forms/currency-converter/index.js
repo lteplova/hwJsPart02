@@ -12,19 +12,19 @@ xhr.addEventListener("loadstart", onLoadStart);
 xhr.addEventListener("loadend", onLoadEnd);
 xhr.open("GET", "https://neto-api.herokuapp.com/currency", true);
 xhr.send();
-let data = [];
+// let data = [];
 
 
 [fromEl, toEl, sourceEl].forEach(item => item.addEventListener('input', calc));
 
 function calc(e) {
-  return outputEl.innerHTML = (Math.round((sourceEl.value * fromEl.value / toEl.value) * 100) / 100);
+  outputEl.innerHTML = (Math.round((sourceEl.value * fromEl.value / toEl.value) * 100) / 100);
 }
 
 function onLoad() {
   if (xhr.status === 200) {
     try {
-      data = JSON.parse(xhr.responseText);
+      const data = JSON.parse(xhr.responseText);
       fromEl.innerHTML = render(data);
       toEl.innerHTML = render(data);
       calc();
