@@ -8,7 +8,7 @@ const sourceEl = document.querySelector("#source");
 const outputEl = document.querySelector("#result");
 const xhr = new XMLHttpRequest();
 xhr.addEventListener("load", onLoad);
-//xhr.addEventListener("loadstart", onLoadStart);
+xhr.addEventListener("loadstart", onLoadStart);
 xhr.addEventListener("loadend", onLoadEnd);
 xhr.open("GET", "https://neto-api.herokuapp.com/currency", true);
 xhr.send();
