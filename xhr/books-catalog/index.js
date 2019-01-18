@@ -9,11 +9,16 @@ let data = [];
 
 function onLoad() {
   if (xhr.status === 200) {
-    data = JSON.parse(xhr.responseText);
-    contentEl.innerHTML = data.reduce(
-      (str, currentValue) => str + render(currentValue), "");
-  }
-  else {
+    try {
+      data = JSON.parse(xhr.responseText);
+      contentEl.innerHTML = data.reduce(
+        (str, currentValue) => str + render(currentValue), "");
+    }
+    catch (e) {
+      console.error(`JSON invalid ${e}`);
+      return;
+    }
+  } else {
     console.log(`Ошибка загрузки данных: ${xhr.status}, ${xhr.statusText}`);
   }
 }
