@@ -33,12 +33,11 @@ function onChange() {
 }
 
 function outputFill() {
-  Array.from(outputEls).forEach(itemEl => {
+  Array.from(outputEls).forEach(itemEl => 
     itemEl.innerHTML = Array.from(contentformEls).find(
       itemFinds => itemEl.id == itemFinds.name
-    ).value;
-    //itemEl.innerHTML = findedEl && findedEl.value;
-  });
+    ).value
+  );
 }
 
 function onSubmit(e) {
