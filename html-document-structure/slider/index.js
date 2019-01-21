@@ -1,53 +1,85 @@
 "use strict";
 
-const sliderNavEl = document.querySelector('.slider-nav');
-const slidesEl = document.querySelector('.slides');
+const sliderNavEl = document.querySelector(".slider-nav");
+const slidesEl = document.querySelector(".slides");
 const liEls = slidesEl.children;
-slidesEl.firstElementChild.classList.add('slide-current');
+const maxIndexLi = liEls.length - 1;
+let currentIndex = 0;
 
-console.log(liEls[0], liEls[0].nextElementSibling, liEls[0].previouseElementSibling);
+slidesEl.firstElementChild.classList.add("slide-current");
+getNavEl("first").classList.add("disabled");
+getNavEl("prev").classList.add("disabled");
 
-Array.from(sliderNavEl.children).forEach(item => item.addEventListener('click', onClick));
+Array.from(sliderNavEl.children).forEach(item =>
+  item.addEventListener("click", onClick)
+);
 
 function onClick(event) {
-    event.preventDefault();
-    console.log(event.target.dataset.action);
+  event.preventDefault();
 
-    switch (event.target.dataset.action) {
-        case 'first':
-            liEls[0].previousElementSibling = liEls[0].disabled;
-            liEls[0].classList.remove('slide-current');
-            slidesEl.firstElementChild.classList.add('slide-current');
+  if (event.target.classList.contains("disabled")) {
+    return;
+  }
 
-            break;
+  switch (event.target.dataset.action) {
+    case "first":
+      if (currentIndex != 0) {
+        liEls[currentIndex].classList.remove("slide-current");
+        slidesEl.firstElementChild.classList.add("slide-current");
+      }
+      currentIndex = 0;
+      break;
 
-        case 'prev':
-            if (liEls[0].previousElementSibling) {
-                liEls[0].classList.remove('slide-current');
-                liEls[0].previousElementSibling.classList.add('slide-current');
-            } else {
-                liEls[0].previousElementSibling = liEls[0].disabled;
-            }
+    case "prev":
+      if (currentIndex != 0) {
+        liEls[currentIndex].classList.remove("slide-current");
+        liEls[currentIndex].previousElementSibling.classList.add(
+          "slide-current"
+        );
+      }
+      currentIndex--;
+      break;
 
-            break;
+    case "next":
+      if (currentIndex < maxIndexLi) {
+        liEls[currentIndex].classList.remove("slide-current");
+        liEls[currentIndex].nextElementSibling.classList.add("slide-current");
+      }
+      currentIndex++;
+      break;
 
-        case 'next':
-            if (liEls[0].nextElementSibling) {
-                liEls[0].classList.remove('slide-current');
-                liEls[0].nextElementSibling.classList.add('slide-current');
-            } else {
-                liEls[0].nextElementSibling = liEls[0].disabled;
-            }
-            break;
+    case "last":
+      if (currentIndex < maxIndexLi) {
+        liEls[currentIndex].classList.remove("slide-current");
+        slidesEl.lastElementChild.classList.add("slide-current");
+      }
+      currentIndex = maxIndexLi;
+      break;
+  }
+  
+  if (currentIndex > 0) {
+    getNavEl("first").classList.remove("disabled");
+    getNavEl("prev").classList.remove("disabled");
+  }
 
-        case 'last':
-            liEls[0].nextElementSibling = liEls[0].disabled;
-            liEls[0].classList.remove('slide-current');
-            slidesEl.lastElementChild.classList.add('slide-current');
+  if (currentIndex < maxIndexLi) {
+    getNavEl("next").classList.remove("disabled");
+    getNavEl("last").classList.remove("disabled");
+  }
 
-            break;
+  if (currentIndex == 0) {
+    getNavEl("first").classList.add("disabled");
+    getNavEl("prev").classList.add("disabled");
+  }
 
-        default:
-            break;
-    }
+  if (currentIndex == maxIndexLi) {
+    getNavEl("next").classList.add("disabled");
+    getNavEl("last").classList.add("disabled");
+  }
+}
+
+function getNavEl(name) {
+  return Array.from(sliderNavEl.children).find(item => {
+    return item.dataset.action == name;
+  });
 }
