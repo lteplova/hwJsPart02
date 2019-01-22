@@ -2,17 +2,16 @@
 
 const doneEl = document.querySelector('.done');
 const undoneEl = document.querySelector('.undone');
-const listEl = document.querySelectorAll(".todo-list input[type='checkbox']");
-console.log(listEl);
+const listEls = document.querySelectorAll(".todo-list input[type='checkbox']")
 
-Array.from(listEl).forEach(element => {
+Array.from(listEls).forEach(element => {
     element.addEventListener("change", move);
-    console.log(element);
-
 });
 
 function move(event) {
-    if (listEl.children.classList.contains('checked')) {
-        doneEl.appendChild(undoneEl);
+    if (event.target.checked) {
+        doneEl.appendChild(event.target.parentElement);
+    } else {
+        undoneEl.appendChild(event.target.parentElement);
     }
 }
