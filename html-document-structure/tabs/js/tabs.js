@@ -25,3 +25,5 @@ function onClick(event, articleEl) {
   event.target.parentElement.classList.toggle("ui-tabs-active");
   articleEl.classList.remove("hidden");
 }
+
+
