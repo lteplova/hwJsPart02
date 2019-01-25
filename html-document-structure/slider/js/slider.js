@@ -7,98 +7,70 @@ const maxIndexLi = liEls.length - 1;
 let currentIndex = 0;
 
 slidesEl.firstElementChild.classList.add("slide-current");
-getNavEl("first").classList.add("disabled");
-getNavEl("prev").classList.add("disabled");
+document.querySelector("[data-action = 'first']").classList.add("disabled");
+document.querySelector("[data-action = 'prev']").classList.add("disabled");
 
 Array.from(sliderNavEl.children).forEach(item =>
-    item.addEventListener("click", onClick)
+  item.addEventListener("click", onClick)
 );
 
 function onClick(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    if (event.target.classList.contains("disabled")) {
-        return;
-    }
+  if (event.target.classList.contains("disabled")) {
+    return;
+  }
 
-    switch (event.target.dataset.action) {
-        case "first":
-            if (currentIndex != 0) {
-                liEls[currentIndex].classList.remove("slide-current");
-                slidesEl.firstElementChild.classList.add("slide-current");
-            }
-            currentIndex = 0;
-            changeButtonState(currentIndex);
-            break;
+  switch (event.target.dataset.action) {
+    case "first":
+      if (currentIndex != 0) {
+        liEls[currentIndex].classList.remove("slide-current");
+        slidesEl.firstElementChild.classList.add("slide-current");
+      }
+      currentIndex = 0;
+      break;
 
-        case "prev":
-            if (currentIndex != 0) {
-                liEls[currentIndex].classList.remove("slide-current");
-                liEls[currentIndex].previousElementSibling.classList.add(
-                    "slide-current"
-                );
-            }
-            currentIndex--;
-            changeButtonState(currentIndex);
-            break;
+    case "prev":
+      if (currentIndex != 0) {
+        liEls[currentIndex].classList.remove("slide-current");
+        liEls[currentIndex].previousElementSibling.classList.add(
+          "slide-current"
+        );
+      }
+      currentIndex--;
+      break;
 
-        case "next":
-            if (currentIndex < maxIndexLi) {
-                liEls[currentIndex].classList.remove("slide-current");
-                liEls[currentIndex].nextElementSibling.classList.add("slide-current");
-            }
-            currentIndex++;
-            changeButtonState(currentIndex);
-            break;
+    case "next":
+      if (currentIndex < maxIndexLi) {
+        liEls[currentIndex].classList.remove("slide-current");
+        liEls[currentIndex].nextElementSibling.classList.add("slide-current");
+      }
+      currentIndex++;
+      break;
 
-        case "last":
-            if (currentIndex < maxIndexLi) {
-                liEls[currentIndex].classList.remove("slide-current");
-                slidesEl.lastElementChild.classList.add("slide-current");
-            }
-            currentIndex = maxIndexLi;
-            changeButtonState(currentIndex);
-            break;
-    }
+    case "last":
+      if (currentIndex < maxIndexLi) {
+        liEls[currentIndex].classList.remove("slide-current");
+        slidesEl.lastElementChild.classList.add("slide-current");
+      }
+      currentIndex = maxIndexLi;
+
+      break;
+  }
+  changeButtonState(currentIndex);
 }
 
 function changeButtonState(currentIndex) {
-
-    if (currentIndex > 0) {
-        getNavEl("first").classList.toggle("disabled", currentIndex == 0);
-        getNavEl("prev").classList.toggle("disabled", currentIndex == 0);
-        // getNavEl("first").classList.remove("disabled");
-        // getNavEl("prev").classList.remove("disabled");
-    }
-
-    if (currentIndex < maxIndexLi) {
-        getNavEl("next").classList.toggle("disabled", currentIndex == maxIndexLi);
-        getNavEl("last").classList.toggle("disabled", currentIndex == maxIndexLi);
-        // getNavEl("next").classList.remove("disabled");
-        // getNavEl("last").classList.remove("disabled");
-    }
-
-    if (currentIndex == 0) {
-        getNavEl("first").classList.toggle("disabled", currentIndex == 0);
-        getNavEl("prev").classList.toggle("disabled", currentIndex == 0);
-        // getNavEl("first").classList.add("disabled");
-        // getNavEl("prev").classList.add("disabled");
-    }
-
-    if (currentIndex == maxIndexLi) {
-        getNavEl("next").classList.toggle("disabled", currentIndex == maxIndexLi);
-        getNavEl("last").classList.toggle("disabled", currentIndex == maxIndexLi);
-        // getNavEl("next").classList.add("disabled");
-        // getNavEl("last").classList.add("disabled");
-    }
+  document
+    .querySelector("[data-action = 'first']")
+    .classList.toggle("disabled", currentIndex == 0);
+  document
+    .querySelector("[data-action = 'prev']")
+    .classList.toggle("disabled", currentIndex == 0);
+  document
+    .querySelector("[data-action = 'next']")
+    .classList.toggle("disabled", currentIndex == maxIndexLi);
+  document
+    .querySelector("[data-action = 'last']")
+    .classList.toggle("disabled", currentIndex == maxIndexLi);
 }
-
-
-function getNavEl(name) {
-     return document.querySelector("[data-action = ]");
-    // return document.querySelector("[data-action = 'prev']");
-    // return Array.from(sliderNavEl.children).find(item => {
-    //     return item.dataset.action == name;
-    // });
-}
-
