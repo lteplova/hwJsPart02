@@ -3,6 +3,7 @@ const colorEl = document.querySelector("#colorSwatch");
 const sizeEl = document.querySelector("#sizeSwatch");
 const cartEl = document.querySelector("#quick-cart");
 const thumbImagEls = document.querySelectorAll('.thumb-image');
+let dataCart = [];
 
 Array.from(thumbImagEls).forEach(item => {
     item.addEventListener('click', preventOpen);
@@ -15,21 +16,12 @@ function preventOpen(event) {
 }
 
 const buttonAddToCart = document.querySelector('#AddToCart');
-buttonAddToCart.addEventListener('click', onClicAddToCart);
-
-
-let cartState = localStorage.getItem("showDataCart") || 0;
+buttonAddToCart.addEventListener('click', onClickAddToCart);
 
 showDataColour();
 showDataSize();
 showDataCart();
 
-function addCart(data) {
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", onLoad);
-    xhr.open("POST", 'https://neto-api.herokuapp.com/cart', true);
-    xhr.send(data);
-}
 
 function loadData(url, cb) {
     let data = [];
@@ -77,10 +69,12 @@ function showDataCart() {
             console.log(item);
             renderCart(cartEl, item, index);
         });
+        dataCart = data;
     });
 }
 
 function renderColor(colorContainerEl, data, index) {
+    const checked = localStorage.getItem('color') == `swatch-${index}-${data.type}` ? 'checked' : '';
     const divEl = document.createElement("div");
     divEl.dataset.value = data.type;
     divEl.classList.add(
@@ -90,16 +84,17 @@ function renderColor(colorContainerEl, data, index) {
         data.isAvailable ? "available" : "soldout"
     );
     divEl.innerHTML = `<div class="tooltip">${data.title}</div>
-    <input quickbeam="color" id="swatch-${index}-${data.type}" type="radio" name="color" value="${data.type}" checked ${data.isAvailable ? '' : 'disabled'}>
+    <input quickbeam="color" id="swatch-${index}-${data.type}" type="radio" name="color" onChange="changeStorage(this, 'color')" value="${data.type}" ${checked} ${data.isAvailable ? '' : 'disabled'}>
     <label for="swatch-${index}-${data.type}" style="border-color: ${data.type};">
       <span style="background-color: ${data.type};"></span>
       <img class="crossed-out" src="https://neto-api.herokuapp.com/hj/3.3/cart/soldout.png?10994296540668815886">
     </label>`;
-
+    
     colorContainerEl.appendChild(divEl);
 }
 
 function renderSize(sizeContainerEl, data, index) {
+    const checked = localStorage.getItem('size') == `swatch-${index}-${data.type}` ? 'checked' : '';
     const divEl = document.createElement("div");
     divEl.dataset.value = data.type;
     divEl.classList.add(
@@ -108,7 +103,7 @@ function renderSize(sizeContainerEl, data, index) {
         data.type,
         data.isAvailable ? "available" : "soldout"
     );
-    divEl.innerHTML = `<input id="swatch-${index}-${data.type}" type="radio" name="size" value="${data.type}" ${data.isAvailable ? '' : 'disabled'}>
+    divEl.innerHTML = `<input id="swatch-${index}-${data.type}" type="radio" name="size" onChange="changeStorage(this, 'size')" value="${data.type}" ${checked} ${data.isAvailable ? '' : 'disabled'}>
     <label for="swatch-${index}-${data.type}">${data.type}
       <img class="crossed-out" src="https://neto-api.herokuapp.com/hj/3.3/cart/soldout.png?10994296540668815886">
     </label>`;
@@ -128,12 +123,12 @@ function renderCart(cartContainerEl, data, index) {
   </div>`;
 }
 
-function setCartState(cartState) {
-    localStorage.setItem("cartState", cartState);
-    counterEl.innerHTML = counter;
+function changeStorage(el, key) {
+    localStorage.setItem(key, el.id);
 }
 
-function onClicAddToCart(event) {
+
+function onClickAddToCart(event) {
     const xhr = new XMLHttpRequest();
     const errorMessage = event.target.querySelector(".error-message");
     const response = JSON.parse(xhr.response);
