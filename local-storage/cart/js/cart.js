@@ -7,15 +7,6 @@ const cartFormEl = document.querySelector("#AddToCartForm");
 const pricePreviewEl = document.querySelector("#price-preview");
 const titleEl = document.querySelector("h1");
 
-Array.from(thumbImagEls).forEach(item => {
-  item.addEventListener("click", preventOpen);
-});
-
-function preventOpen(event) {
-  event.preventDefault();
-  event.target.parentElement.classList.toogle("active");
-}
-
 const buttonAddToCart = document.querySelector("#AddToCart");
 buttonAddToCart.addEventListener("click", onClickAddToCart);
 
@@ -30,6 +21,7 @@ function loadData(url, cb) {
   xhr.open("GET", url, true);
   xhr.send();
 
+   // обработчик загрузки данных с сервера, передает в callback данные
   function onLoad() {
     if (xhr.status === 200) {
       try {
@@ -61,6 +53,7 @@ function showDataSize() {
   });
 }
 
+//функция, показывающая состояние корзины
 function showDataCart() {
   loadData("https://neto-api.herokuapp.com/cart", data => {
 
@@ -163,10 +156,12 @@ function renderCart(cartContainerEl, data, index) {
   </div>`;
 }
 
+// сохранение выбранных цвета и размера в localStorage
 function changeStorage(el, key) {
   localStorage.setItem(key, el.id);
 }
 
+// удаление товара из корзины
 function removeCartItem(el) {
   let formData = new FormData();
   formData.append("productId", el.dataset.id);
@@ -178,6 +173,7 @@ function removeCartItem(el) {
   xhr.addEventListener("load", showDataCart);
 }
 
+// функция добавления товара в корзину
 function onClickAddToCart(event) {
   event.preventDefault();
 
