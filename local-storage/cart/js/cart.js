@@ -3,7 +3,9 @@ const colorEl = document.querySelector("#colorSwatch");
 const sizeEl = document.querySelector("#sizeSwatch");
 const cartEl = document.querySelector("#quick-cart");
 const thumbImagEls = document.querySelectorAll(".thumb-image");
-let dataCart = [];
+const cartFormEl = document.querySelector("#AddToCartForm");
+const pricePreviewEl = document.querySelector("#price-preview");
+const titleEl = document.querySelector("h1");
 
 Array.from(thumbImagEls).forEach(item => {
   item.addEventListener("click", preventOpen);
@@ -16,7 +18,6 @@ function preventOpen(event) {
 
 const buttonAddToCart = document.querySelector("#AddToCart");
 buttonAddToCart.addEventListener("click", onClickAddToCart);
-
 
 showDataColour();
 showDataSize();
@@ -47,7 +48,6 @@ function loadData(url, cb) {
 function showDataColour() {
   loadData("https://neto-api.herokuapp.com/cart/colors", data => {
     data.forEach((item, index) => {
-      console.log(item);
       renderColor(colorEl, item, index);
     });
   });
@@ -56,7 +56,6 @@ function showDataColour() {
 function showDataSize() {
   loadData("https://neto-api.herokuapp.com/cart/sizes", data => {
     data.forEach((item, index) => {
-      console.log(item);
       renderSize(sizeEl, item, index);
     });
   });
@@ -64,26 +63,30 @@ function showDataSize() {
 
 function showDataCart() {
   loadData("https://neto-api.herokuapp.com/cart", data => {
+
+    if (!data.length) {
+      cartEl.innerHTML = '';
+    }
+
+    let sum = 0;
     data.forEach((item, index) => {
-      console.log(item);
       renderCart(cartEl, item, index);
+      sum = +item.price * +item.quantity;
     });
 
     const aEl = document.createElement("a");
     aEl.id = "quick-cart-pay";
     aEl.quickbeam = "cart-pay";
     aEl.className = "cart-ico";
-    !!data.length && aEl.classList.add('open');
-  
+    !!data.length && aEl.classList.add("open");
+
     aEl.innerHTML = `<span>
       <strong class="quick-cart-text">Оформить заказ<br></strong>
-      <span id="quick-cart-price">$800.00</span>
+      <span id="quick-cart-price">$${sum}.00</span>
     </span>`;
-    cartEl.appendChild(aEl);
-    dataCart = data;
-  });
 
- 
+    cartEl.appendChild(aEl);
+  });
 }
 
 function renderColor(colorContainerEl, data, index) {
@@ -154,7 +157,9 @@ function renderCart(cartContainerEl, data, index) {
     <span class="count hide fadeUp" id="quick-cart-product-count-${data.id}">${
     data.quantity
   }</span>
-    <span class="quick-cart-product-remove remove" onClick="removeCartItem(this)" data-id="${data.id}"></span>
+    <span class="quick-cart-product-remove remove" onClick="removeCartItem(this)" data-id="${
+      data.id
+    }"></span>
   </div>`;
 }
 
@@ -163,23 +168,25 @@ function changeStorage(el, key) {
 }
 
 function removeCartItem(el) {
-    console.log(el.dataset.id);
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://neto-api.herokuapp.com/cart/remove");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({productId: el.dataset.id}));
+  let formData = new FormData();
+  formData.append("productId", el.dataset.id);
 
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://neto-api.herokuapp.com/cart/remove");
+  xhr.send(formData);
+
+  xhr.addEventListener("load", showDataCart);
 }
 
 function onClickAddToCart(event) {
+  event.preventDefault();
+
+  let formData = new FormData(cartFormEl);
+  formData.append("productId", cartFormEl.dataset.productId);
+
   const xhr = new XMLHttpRequest();
-  const errorMessage = event.target.querySelector(".error-message");
-  const response = JSON.parse(xhr.response);
-  if (response.error) {
-    errorMessage.innerHTML = response.message;
-  } else {
-    xhr.open("POST", "https://neto-api.herokuapp.com/cart");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(data));
-  }
+  xhr.open("POST", "https://neto-api.herokuapp.com/cart");
+  xhr.send(formData);
+
+  xhr.addEventListener("load", showDataCart);
 }
