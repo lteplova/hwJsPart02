@@ -3,6 +3,7 @@
 const canvasEl = document.querySelector('canvas');
 canvasEl.width = 800;
 canvasEl.height = 400;
+canvasEl.style.backgroundColor = 'black';
 
 const ctx = canvasEl.getContext('2d');
 
