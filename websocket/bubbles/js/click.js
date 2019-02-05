@@ -1,7 +1,7 @@
 'use strict';
 
 const connection = new WebSocket('wss://neto-api.herokuapp.com/mouse');
-const clickEl = document.querySelector('body');
+const clickEl = document.querySelector('canvas');
 const coords = {};
 
 clickEl.addEventListener('click', onclick);
