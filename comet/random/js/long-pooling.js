@@ -4,9 +4,9 @@ const longPoolingtEl = document.querySelector(".long-pooling");
 const divLongPoolEls = longPoolingtEl.children;
 
 const xhrLP = new XMLHttpRequest();
-xhrLP.addEventListener("load", onLoad);
+xhrLP.addEventListener("load", onLoadLP);
 
-function onLoad() {
+function onLoadLP() {
   const num = +xhrLP.responseText;
   Array.from(divLongPoolEls).forEach(item => {
     item.classList.remove("flip-it");
@@ -15,11 +15,11 @@ function onLoad() {
   console.log(+xhrLP.responseText);
 }
 
-function pool() {
+function poolLong() {
   xhrLP.open("GET", "https://neto-api.herokuapp.com/comet/long-pooling", true);
   xhrLP.send();
 
-  setTimeout(pool, 5000);
+  setTimeout(poolLong, 5000);
 }
 
-pool();
+poolLong();
