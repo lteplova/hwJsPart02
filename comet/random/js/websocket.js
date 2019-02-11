@@ -1,29 +1,15 @@
-'use strict';
+"use strict";
 
-const websocketEl = document.querySelector('.websocket');
+const websocketEl = document.querySelector(".websocket");
 const divEls = websocketEl.children;
-const ws = new WebSocket('wss://neto-api.herokuapp.com/comet/websocket');
-const result = [];
+const ws = new WebSocket("wss://neto-api.herokuapp.com/comet/websocket");
 
-Array.from(divEls).forEach(item => {
-    if (item.tagName == 'DIV') 
-    result.push(item.innerText);
-    console.log(result);
-});
+ws.addEventListener("message", getNumber);
 
-Array.from(divEls).map(
-    
-)
-
-//console.log(divEls);
-
-ws.addEventListener('message', getNumber);
-
-function getNumber() {
-
-    let min = 1;
-    let max = 10
-    let res = Math.floor(Math.random() * (max - min) + min);
- 
-  //  console.log(res)   ;
+function getNumber(mess) {
+  const num = +mess.data;
+  Array.from(divEls).forEach(item => {
+    item.classList.remove("flip-it");
+  });
+  divEls[num].classList.toggle("flip-it");
 }
