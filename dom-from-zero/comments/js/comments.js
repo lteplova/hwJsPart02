@@ -7,6 +7,7 @@ function showComments(list) {
 }
 
 // функция проверки типа элемента
+
 function el(tagName, attributes, children) {
   const element = document.createElement(tagName);
 
