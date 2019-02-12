@@ -1,13 +1,15 @@
 'use strict';
 
-const chatEl = document.querySelector('.chat');
 const ws = new WebSocket('wss://neto-api.herokuapp.com/chat');
+
+const chatEl = document.querySelector('.chat');
 const chatStatusEl = document.querySelector('.chat-status');
 const buttonSubmitdEl = document.querySelector('.message-submit');
 const messageStatus = document.querySelector('.message.message-status');
 const contentEl = document.querySelector('.messages-content');
-const typeMess = document.querySelector('.message.loading');
-const messageUser = document.querySelector('.message.message-personal');
+const typeLoad = document.querySelector('.message.loading');
+const messageMy = document.querySelector('.message.message-personal');
+const formEl = document.querySelector('.message-box');
 
 ws.addEventListener('open', onlineStatus);
 ws.addEventListener('close', offlineStatus);
@@ -16,7 +18,6 @@ ws.addEventListener('message', sendMessage);
 
 // статус чата "в сети"
 function onlineStatus() {
-    console.log(buttonSubmitdEl);
     notes('Пользователь появился в сети');
     buttonSubmitdEl.disabled = false;
     chatStatusEl.textContent = chatStatusEl.dataset.online;
@@ -38,32 +39,33 @@ function offlineStatus() {
 }
 
 function sendMessage(event) {
-    const valueEl = document.querySelector('.message-input').value;
-    const data = event.data;
 
+    const data = event.data;
+    const typingMessage = typeLoad;
+    const messageUser = document.querySelector('[class="message"]').cloneNode(true);
     if (data === '...') {
-        contentEl.appendChild(typeMess);
+        contentEl.appendChild(typingMessage).scrollIntoView({ block: "end", behavior: "smooth" });
     } else {
         addMessage(messageUser, data);
-      //  contentEl.removeChild(typeMess);
-        contentEl.appendChild(messageUser);
-
+     //   contentEl.removeChild(typingMessage);
+        contentEl.appendChild(messageUser).scrollIntoView({ block: "end", behavior: "smooth" });
     }
+
 }
 
 const submitEl = document.querySelector('.message-box');
 submitEl.addEventListener('submit', onSubmit);
 
-function onSubmit() {
+// обработка передачи сообщения по нажатию кнопки
+function onSubmit(event) {
     event.preventDefault();
-
-    contentEl.appendChild(messageUser);
-    ws.send(valueEl);
+    const value = document.querySelector('.message-input').value;
+    const messageMy = document.querySelector('.message.message-personal').cloneNode(true);
+    addMessage(messageMy, value);
+    contentEl.appendChild(messageMy);
+    ws.send(value);
+    formEl.reset();
 }
-
-
-
-
 
 
 function addMessage(who, data) {
