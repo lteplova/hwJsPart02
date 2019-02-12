@@ -14,6 +14,7 @@ navigator.mediaDevices.getUserMedia(constraints)
   videoEl.srcObject = mediaStream;
   videoEl.onloadedmetadata = function(e) {
     videoEl.play();
+    takePhotoEl.parentElement.style.display = 'block';
   };
 })
 .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
