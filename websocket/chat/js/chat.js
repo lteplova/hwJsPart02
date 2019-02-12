@@ -46,7 +46,7 @@ function sendMessage(event) {
         contentEl.appendChild(typingMessage).scrollIntoView({ block: "end", behavior: "smooth" });
     } else {
         addMessage(messageUser, data);
-     //   contentEl.removeChild(typingMessage);
+   //   contentEl.removeChild(typingMessage);
         contentEl.appendChild(messageUser).scrollIntoView({ block: "end", behavior: "smooth" });
     }
 

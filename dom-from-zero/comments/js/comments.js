@@ -3,6 +3,7 @@
 function showComments(list) {
   const commentsContainer = document.querySelector('.comments');
   const comments = list.map(createComment);
+  console.log(list);
   comments.forEach(item => commentsContainer.appendChild(item));
 }
 
