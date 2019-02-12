@@ -15,7 +15,6 @@ ws.addEventListener('open', onlineStatus);
 ws.addEventListener('close', offlineStatus);
 ws.addEventListener('message', sendMessage);
 
-
 // статус чата "в сети"
 function onlineStatus() {
     notes('Пользователь появился в сети');
@@ -56,18 +55,18 @@ function sendMessage(event) {
 const submitEl = document.querySelector('.message-box');
 submitEl.addEventListener('submit', onSubmit);
 
-// обработка передачи сообщения по нажатию кнопки
+// обработка передачи сообщения по нажатию кнопки отправить
 function onSubmit(event) {
     event.preventDefault();
     const value = document.querySelector('.message-input').value;
     const messageMy = document.querySelector('.message.message-personal').cloneNode(true);
     addMessage(messageMy, value);
-    contentEl.appendChild(messageMy);
+    contentEl.appendChild(messageMy).scrollIntoView({block: "end", behavior: "smooth"});
     ws.send(value);
     formEl.reset();
 }
 
-
+// отображение отправленного сообщения, даты 
 function addMessage(who, data) {
     const time = new Date();
     const hour = time.getHours() < 10 ? `0${time.getHours()}` : time.getHours();
