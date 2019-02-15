@@ -1,24 +1,45 @@
-"use strict";
+'use strict';
 
-const logoEls = document.querySelectorAll(".logo");
-const trashEl = document.querySelector("#trash_bin");
-let movedPiece = null;
+const iconEls = document.querySelectorAll('.logo');
+const trashEl = document.querySelector('#trash_bin');
+let movedEl = null;
+let defaultPosition = {};
+let offset = {};
 
-document.addEventListener("dragstart", onDragStart);
-document.addEventListener("dragend", onDrop);
+document.addEventListener('mousedown', onMouseDown);
+document.addEventListener('mousemove', event => onMouseMove(event.pageX, event.pageY));
+document.addEventListener('mouseup', onMouseUp);
 
-function onDragStart(event) {
-  if (event.target.classList.contains("logo")) {
-    movedPiece = event.target;
-    event.dataTransfer.setData("text", "one");
+function onMouseDown(event) {
+  if (!event.target.classList.contains('logo')) return;
+  movedEl = event.target;
+  defaultPosition.x = movedEl.style.left;
+  defaultPosition.y = movedEl.style.top;
+  offset.x = movedEl.getBoundingClientRect().width / 2;
+  offset.y = movedEl.getBoundingClientRect().height / 2;
+
+  movedEl.classList.add('moving');
+}
+
+function onMouseMove(x, y) {
+  //event.preventDefault();
+  if (movedEl) {
+    movedEl.style.left = x - offset.x + 'px';
+    movedEl.style.top = y - offset.y + 'px';
   }
 }
 
-function onDrop(event) {
-  const crossEl = document.elementFromPoint(event.pageX, event.pageY);
+function onMouseUp(event) {
+  if (!movedEl) return;
+  const crossEl = document.elementFromPoint(event.clientX, event.clientY);
   if (crossEl.id == trashEl.id) {
-    movedPiece.style.display = "none";
+    movedEl.style.display = 'none';
   }
-  movedPiece.classList.remove("moving");
-  movedPiece = null;
+
+  movedEl.classList.remove('moving');
+  movedEl.style.left = defaultPosition.x;
+  movedEl.style.top = defaultPosition.y;
+  movedEl = null;
+  defaultPosition = {};
+  offset = {};
 }
