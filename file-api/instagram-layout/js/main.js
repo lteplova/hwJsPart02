@@ -54,13 +54,13 @@ const addClass = ( className, context ) => context.classList.add( className ),
       div = event.target.parentNode;
       event.target.remove();
     }    
-    
+    let img = document.createElement('img');
+
     // проверка на тип добавляемого файла    
     let imageTypeRegExp = /^image\//;
     let files = Array.from(event.dataTransfer.files);
     files.forEach(file => {
       if (imageTypeRegExp.test(file.type)) {
-        let img = document.createElement('img');
         img.src = URL.createObjectURL(file);
         img.addEventListener('load', event => {
           URL.revokeObjectURL(event.currentTarget.src);
