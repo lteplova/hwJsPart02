@@ -140,7 +140,6 @@ const addClass = ( className, context ) => context.classList.add( className ),
     }    
     
     this.result.value = `<img src='${canvas.toDataURL()}'>`;
-    document.querySelector('#output').src = canvas.toDataURL();
   }
 }
 
