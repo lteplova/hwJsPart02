@@ -33,10 +33,9 @@ class SpriteGenerator {
     if (!files) return;
     // внесла правки, использовала push(), чтобы содержимое массива не перезаписывалось
     Array.from(files).forEach(item => {
-      this.images.push(item);
+      if (/image/.test(item.type)) this.images.push(item);
     });
 
-    this.images = this.images.filter(img => /image/.test(img.type)); // оставляем в массиве только картинки
     this.imagesCount = this.images.length;
     this.imagesCountContainer.innerText = this.imagesCount;
     this.images.forEach((image, index) => this.createImage(image, index));
