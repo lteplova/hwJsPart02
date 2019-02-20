@@ -26,7 +26,6 @@ class SpriteGenerator {
   }
 
   onSelectFiles(event) {
-
     this.createCanvas();
     this.cssCode = '';
     const files = event.currentTarget.files;
