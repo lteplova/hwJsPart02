@@ -26,11 +26,19 @@ class SpriteGenerator {
   }
 
   onSelectFiles(event) {
+
     this.createCanvas();
     this.cssCode = '';
     const files = event.currentTarget.files;
     if (!files) return;
-    this.images = Array.from(files).filter(img => /image/.test(img.type)); // оставляем в массиве только картинки
+    // внесла правки, использовала push(), чтобы содержимое массива не перезаписывалось
+    Array.from(files).forEach(item => {
+      this.images.push(item);
+    });
+
+    this.images = this.images.filter(img => /image/.test(img.type)); // оставляем в массиве только картинки
+
+    console.log(this.images);
     this.imagesCount = this.images.length;
     this.imagesCountContainer.innerText = this.imagesCount;
     this.images.forEach((image, index) => this.createImage(image, index));
