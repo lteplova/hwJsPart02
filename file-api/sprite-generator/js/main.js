@@ -37,8 +37,6 @@ class SpriteGenerator {
     });
 
     this.images = this.images.filter(img => /image/.test(img.type)); // оставляем в массиве только картинки
-
-    console.log(this.images);
     this.imagesCount = this.images.length;
     this.imagesCountContainer.innerText = this.imagesCount;
     this.images.forEach((image, index) => this.createImage(image, index));
